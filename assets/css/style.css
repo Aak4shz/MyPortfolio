@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Main Stylesheet — Imports all modular CSS
+   ========================================================================== */
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Import order matters: variables → animations → components → utilities */
+/* NOTE: @import doesn't work well with Python SimpleHTTP server.
+   Using compiled.css instead. To rebuild:
+   cat variables.css animations.css components.css utilities.css > compiled.css */
+@import url('./compiled.css');
+
+/* ---- Global Link Styles (override utilities for specific cases) ---- */
+a:not(.btn):not(.nav-link):not(.proj-link):not(.contact-ctas a):not(.footer a) {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+a:not(.btn):not(.nav-link):not(.proj-link):not(.contact-ctas a):not(.footer a):hover {
+  color: var(--accent-dim);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Image Defaults ---- */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- Form Elements ---- */
+input, textarea, select, button {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ---- Horizontal Rule ---- */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-8) 0;
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: var(--accent-bg);
+  color: var(--fg);
+}
+
+/* ---- Custom Properties for JS ---- */
+:root {
+  --scroll-progress: 0%;
+}
