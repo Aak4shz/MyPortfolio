@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Animations — @keyframes and transition utilities
+   ========================================================================== */
+
+/* ---- Reveal Animations (scroll-triggered) ---- */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-down {
+  from {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes reveal-opacity {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Stagger delays for reveal-stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  animation: reveal-up var(--duration-slower) var(--ease-out) forwards;
+}
+.reveal-stagger > *:nth-child(1)  { animation-delay: 0ms; }
+.reveal-stagger > *:nth-child(2)  { animation-delay: 80ms; }
+.reveal-stagger > *:nth-child(3)  { animation-delay: 160ms; }
+.reveal-stagger > *:nth-child(4)  { animation-delay: 240ms; }
+.reveal-stagger > *:nth-child(5)  { animation-delay: 320ms; }
+.reveal-stagger > *:nth-child(6)  { animation-delay: 400ms; }
+.reveal-stagger > *:nth-child(7)  { animation-delay: 480ms; }
+.reveal-stagger > *:nth-child(8)  { animation-delay: 560ms; }
+.reveal-stagger > *:nth-child(9)  { animation-delay: 640ms; }
+.reveal-stagger > *:nth-child(10) { animation-delay: 720ms; }
+
+/* Reveal classes — applied via JS IntersectionObserver */
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  animation: reveal-up var(--duration-slower) var(--ease-out) forwards;
+}
+.reveal-down.is-visible { animation-name: reveal-down; }
+.reveal-left.is-visible { animation-name: reveal-left; }
+.reveal-right.is-visible { animation-name: reveal-right; }
+.reveal-scale.is-visible { animation-name: reveal-scale; }
+.reveal-opacity.is-visible { animation-name: reveal-opacity; }
+
+/* ---- Hero Specific Animations ---- */
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes typed-caret {
+  0%, 50% { border-right-color: var(--accent); }
+  51%, 100% { border-right-color: transparent; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-bg); }
+  50% { box-shadow: 0 0 24px 4px var(--accent-bg); }
+}
+
+/* ---- Button / Interactive Animations ---- */
+@keyframes btn-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+@keyframes border-slide {
+  0% { transform: scaleX(0); transform-origin: right; }
+  50% { transform: scaleX(1); transform-origin: right; }
+  51% { transform-origin: left; }
+  100% { transform: scaleX(0); transform-origin: left; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---- Terminal / Matrix Animations ---- */
+@keyframes matrix-fall {
+  from { transform: translateY(-100%); opacity: 1; }
+  to { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes terminal-boot {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes line-appear {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- Progress / Scroll Animations ---- */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--scroll-progress, 0%); }
+}
+
+/* ---- Navigation Animations ---- */
+@keyframes nav-slide-down {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyparams nav-link-slide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Card / Project Animations ---- */
+@keyframes card-lift {
+  from { transform: translateY(0); box-shadow: var(--shadow-md); }
+  to { transform: translateY(-8px); box-shadow: var(--shadow-lg), var(--shadow-glow); }
+}
+
+@keyframes card-tilt {
+  from { transform: perspective(1000px) rotateX(0) rotateY(0); }
+  to { transform: perspective(1000px) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)); }
+}
+
+/* ---- Loading / Skeleton Animations ---- */
+@keyframes skeleton-pulse {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---- Utility Animation Classes ---- */
+.animate-float { animation: float 4s var(--ease-in-out) infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s var(--ease-in-out) infinite; }
+.animate-shimmer { animation: shimmer 2s linear infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Reduced Motion Override ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
