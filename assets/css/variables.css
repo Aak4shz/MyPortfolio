@@ -1,0 +1,124 @@
+/* ==========================================================================
+   CSS Custom Properties — Design Tokens
+   Single source of truth for colors, spacing, typography, easing
+   ========================================================================== */
+
+:root {
+  /* ---- Colors: Terminal Green Theme (rohitkumarranjan.in inspired) ---- */
+  --bg: #121315;
+  --bg-elevated: #000000;
+  --bg-card: #000000;
+  --bg-card-hover: #0a0a0a;
+  --border: #00ff4133;
+  --border-bright: #00ff4166;
+
+  --fg: #ffffff;
+  --fg-muted: #b9cacb;
+  --fg-subtle: #7a8b8c;
+
+  --accent: #00ff41;
+  --accent-dim: #00cc34;
+  --accent-bg: rgba(0, 255, 65, 0.05);
+  --accent-border: rgba(0, 255, 65, 0.3);
+
+  --warn: #ffbd2e;
+  --warn-bg: rgba(255, 189, 46, 0.1);
+  --error: #ff5f57;
+  --error-bg: rgba(255, 95, 87, 0.1);
+
+  --grad-start: #00ff41;
+  --grad-mid: #00cc88;
+  --grad-end: #00aa99;
+
+  /* ---- Typography ---- */
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-ui: 'Manrope', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.7rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.5rem;
+  --fs-4xl: 3.5rem;
+  --fs-5xl: 5rem;
+
+  --lh-tight: 1.1;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* ---- Spacing Scale (4px base) ---- */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ---- Border Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 24px rgba(0, 255, 65, 0.2);
+  --shadow-glow-sm: 0 0 10px rgba(0, 255, 65, 0.2);
+  --shadow-inner: 0 0 20px rgba(0, 255, 65, 0.05) inset;
+
+  /* ---- Transitions / Easing ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+
+  /* ---- Z-Index Scale ---- */
+  --z-bg: -1;
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+  --z-cursor: 9999;
+
+  /* ---- Layout ---- */
+  --max-width: 1200px;
+  --nav-height: 64px;
+  --progress-height: 3px;
+
+  /* ---- Viewport ---- */
+  --vh: 1vh;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #4a5c6e;
+    --fg-muted: #a8b8ce;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+}
