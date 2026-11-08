@@ -1,0 +1,12 @@
+{
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "21st-21st-dev-vz9vruce@anthropic-plugin-directory": true,
+    "a1-gallery@anthropic-plugin-directory": true,
+    "github@claude-plugins-official": true
+  }
+}
