@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aakash — Linux Engineer | I use Arch, btw</title>
+  <meta name="description" content="Aakash — BCA student from Ranchi, Arch Linux devotee building Umbrella-Corporation_OS. Self-hosting evangelist, terminal purist.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+    }
+
+    /* === VARIABLES === */
+    :root {
+      --terminal-green: #00ff41;
+      --deep-black: #0a0a0a;
+      --card-black: #121315;
+      --ghost-green: rgba(0, 255, 65, 0.08);
+      --white: #ffffff;
+      --muted: #8fb3b0;
+      --red: #ff0844;
+
+      --glow-sm: 0 0 10px rgba(0, 255, 65, 0.3);
+      --glow-md: 0 0 20px rgba(0, 255, 65, 0.4);
+      --glow-lg: 0 0 30px rgba(0, 255, 65, 0.5);
+
+      --border: 2px solid var(--terminal-green);
+      --border-dim: 1px solid rgba(0, 255, 65, 0.2);
+    }
+
+    /* === BASE === */
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      background: var(--deep-black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--ghost-green);
+      color: var(--terminal-green);
+    }
+
+    /* === LAYOUT === */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 120px 0; position: relative; }
+
+    /* === HEADER === */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--deep-black);
+      border-bottom: var(--border-dim);
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--terminal-green); }
+
+    .nav {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--terminal-green); }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding-top: 64px;
+    }
+
+    #matrix {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      color: var(--terminal-green);
+      font-size: 14px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    .hero-name::after {
+      content: '_';
+      color: var(--terminal-green);
+      animation: blink 1s infinite;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      padding: 16px 32px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: var(--border);
+      background: transparent;
+      color: var(--terminal-green);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: var(--ghost-green);
+      box-shadow: var(--glow-md);
+    }
+
+    .btn-primary {
+      background: var(--terminal-green);
+      color: var(--deep-black);
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--glow-lg);
+    }
+
+    /* === SECTION HEADER === */
+    .section-header {
+      margin-bottom: 64px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s;
+    }
+
+    .section-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-tag {
+      color: var(--terminal-green);
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    /* === CARD === */
+    .card {
+      background: var(--card-black);
+      border: var(--border-dim);
+      padding: 32px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      border-color: var(--terminal-green);
+      box-shadow: var(--glow-sm);
+    }
+
+    /* === GRID === */
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* === BENTO === */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .bento-item {
+      grid-column: span 2;
+      background: var(--card-black);
+      border: var(--border-dim);
+      padding: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s;
+    }
+
+    .bento-item.visible { opacity: 1; transform: translateY(0); }
+    .bento-item:hover { border-color: var(--terminal-green); box-shadow: var(--glow-sm); }
+
+    .bento-item.span-3 { grid-column: span 3; }
+
+    .bento-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .bento-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .chip {
+      font-size: 11px;
+      color: var(--terminal-green);
+      background: var(--ghost-green);
+      padding: 4px 12px;
+      border: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    /* === TERMINAL === */
+    .terminal {
+      background: var(--card-black);
+      border: var(--border);
+      box-shadow: var(--glow-sm);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: var(--border-dim);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28ca42; }
+
+    .terminal-title {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      min-height: 300px;
+      font-size: 13px;
+    }
+
+    .terminal-line {
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .terminal-prompt { color: var(--terminal-green); }
+    .terminal-input {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-family: inherit;
+      font-size: inherit;
+      outline: none;
+      width: 100%;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      padding: 48px 0;
+      border-top: var(--border-dim);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer p { margin-bottom: 8px; }
+    .footer-green { color: var(--terminal-green); }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .hero-name { font-size: 48px; }
+      .section-title { font-size: 32px; }
+      .nav { display: none; }
+      .bento { grid-template-columns: 1fr; }
+      .bento-item, .bento-item.span-3 { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">aakash<span>@</span>arch<span>:~$</span></a>
+      <nav class="nav">
+        <a href="#about">about</a>
+        <a href="#skills">skills</a>
+        <a href="#projects">projects</a>
+        <a href="#terminal">terminal</a>
+        <a href="#contact">contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="matrix"></canvas>
+    <div class="hero-content">
+      <div class="hero-eyebrow">// BCA Student · Ranchi, Jharkhand</div>
+      <h1 class="hero-name">AAKASH</h1>
+      <p class="hero-subtitle">I didn't just fall in love with Linux — I chose it. I use Arch, btw.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">view my work ↓</a>
+        <a href="#terminal" class="btn">./terminal.sh</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 01</span>
+        <h2 class="section-title">~/about</h2>
+      </div>
+      <div class="card">
+        <p style="margin-bottom: 16px;">I'm <strong>Aakash</strong> — a final-year BCA student from Ranchi, and an Arch Linux devotee. In 2023, I bought my first laptop. Six months later, Windows had quietly eaten most of my system's resources. I installed Arch Linux. I never looked back.</p>
+        <p style="margin-bottom: 16px;">Over the next year, I tested <strong>14 distros</strong> — Arch, NixOS, Gentoo, Kali, BlackArch, Fedora, Debian, and more. Each one taught me something different about control, transparency, and how a system should be built.</p>
+        <p style="margin-bottom: 16px;">Now I'm building <strong>Umbrella-Corporation_OS</strong> (a custom Arch ISO with Red Queen aesthetics), running a <strong>self-hosted homelab</strong> that replaced all my subscriptions, and working toward my first Linux Engineer role.</p>
+        <p style="color: var(--muted);">Discipline: 2-hour deep work cap · Daily 5km run · Learning Russian · Progress is a system, not a burst.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 02</span>
+        <h2 class="section-title">~/skills</h2>
+        <p class="section-subtitle">Languages, tools, and the security toolkit. From system-level C to Bash automation.</p>
+      </div>
+      <div class="bento">
+        <div class="bento-item span-3">
+          <div class="bento-title">⚡ Languages</div>
+          <div class="bento-desc">From system-level to scripting</div>
+          <ul class="chips">
+            <li class="chip">Java</li>
+            <li class="chip">C</li>
+            <li class="chip">C++</li>
+            <li class="chip">Python</li>
+            <li class="chip">Bash/Zsh</li>
+            <li class="chip">QML</li>
+          </ul>
+        </div>
+        <div class="bento-item span-3">
+          <div class="bento-title">🐧 Linux Systems</div>
+          <div class="bento-desc">Arch daily driver + 14 distros tested</div>
+          <ul class="chips">
+            <li class="chip">Arch Linux</li>
+            <li class="chip">NixOS</li>
+            <li class="chip">Fedora</li>
+            <li class="chip">Gentoo</li>
+            <li class="chip">Kali</li>
+            <li class="chip">BlackArch</li>
+          </ul>
+        </div>
+        <div class="bento-item">
+          <div class="bento-title">🛠️ Tools</div>
+          <div class="bento-desc">Terminal-first workflow</div>
+          <ul class="chips">
+            <li class="chip">Vim</li>
+            <li class="chip">VSCodium</li>
+            <li class="chip">Git</li>
+            <li class="chip">Kate</li>
+          </ul>
+        </div>
+        <div class="bento-item">
+          <div class="bento-title">🔐 Security</div>
+          <div class="bento-desc">BlackArch: 49+ tools</div>
+          <ul class="chips">
+            <li class="chip">Nmap</li>
+            <li class="chip">Burp Suite</li>
+            <li class="chip">Metasploit</li>
+          </ul>
+        </div>
+        <div class="bento-item">
+          <div class="bento-title">🚀 DevOps</div>
+          <div class="bento-desc">Docker in prod, K8s learning</div>
+          <ul class="chips">
+            <li class="chip">Docker</li>
+            <li class="chip">Kubernetes</li>
+            <li class="chip">systemd</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 03</span>
+        <h2 class="section-title">~/projects</h2>
+        <p class="section-subtitle">Built, not bought.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 style="color: var(--terminal-green); margin-bottom: 12px;">Umbrella-Corporation_OS</h3>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">Custom Arch distro themed around Red Queen / Umbrella Corp. Pre-bundles dev tools + AI toolchain. Bootable ISO via archiso with custom SDDM login.</p>
+          <ul class="chips">
+            <li class="chip">Arch Linux</li>
+            <li class="chip">archiso</li>
+            <li class="chip">SDDM</li>
+            <li class="chip">KDE Plasma</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color: var(--terminal-green); margin-bottom: 12px;">Homelab Server</h3>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">Self-hosted server that replaced all my subscriptions. Entertainment, storage, backups — all running 24/7 on my own hardware.</p>
+          <ul class="chips">
+            <li class="chip">self-hosting</li>
+            <li class="chip">privacy-first</li>
+            <li class="chip">24/7 uptime</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color: var(--terminal-green); margin-bottom: 12px;">Local AI Chatbot</h3>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">Self-hosted AI on Z.ai (GLM backend). No cloud, no subscriptions, no data leaving my network.</p>
+          <ul class="chips">
+            <li class="chip">Z.ai</li>
+            <li class="chip">GLM</li>
+            <li class="chip">Python</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color: var(--terminal-green); margin-bottom: 12px;">Java-Archives-by-AakasH</h3>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">GitHub archive of Java practice. Consistent, disciplined coding — proof that progress is a daily system.</p>
+          <ul class="chips">
+            <li class="chip">Java</li>
+            <li class="chip">GitHub</li>
+            <li class="chip">practice</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINAL -->
+  <section id="terminal">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// 04</span>
+        <h2 class="section-title">~/interactive-terminal</h2>
+        <p class="section-subtitle">Type <code style="color: var(--terminal-green);">help</code> and hit enter. Try <code style="color: var(--terminal-green);">neofetch</code> or <code style="color: var(--terminal-green);">sudo hire-me</code>.</p>
+      </div>
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dot dot-red"></div>
+          <div class="terminal-dot dot-yellow"></div>
+          <div class="terminal-dot dot-green"></div>
+          <div class="terminal-title">guest@aakash-arch: ~/portfolio</div>
+        </div>
+        <div class="terminal-body" id="terminal-output">
+          <div class="terminal-line">Arch Linux 6.x (tty1)</div>
+          <div class="terminal-line">Last login: <span id="login-time"></span></div>
+          <div class="terminal-line" style="margin-bottom: 16px;">Type 'help' for available commands. Try 'neofetch'.</div>
+          <form id="terminal-form" style="display: flex; gap: 8px;">
+            <span class="terminal-prompt">guest@aakash-arch:~$</span>
+            <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false">
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header" style="text-align: center; max-width: 100%;">
+        <span class="section-tag">// 05</span>
+        <h2 class="section-title">sudo contact_me</h2>
+        <p class="section-subtitle" style="max-width: 100%; margin: 16px auto 32px;">Fellow Linux engineers, distro hoppers, self-hosting evangelists — let's talk.</p>
+      </div>
+      <div style="display: flex; gap: 16px; justify-content: center;">
+        <a href="mailto:aakash@example.com" class="btn btn-primary">echo "hello" | mail</a>
+        <a href="https://github.com/aakash" class="btn">github ↗</a>
+        <a href="https://linkedin.com/in/aakash" class="btn">linkedin ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-green">sudo pacman -Syu life && systemctl start ambition.service</p>
+    <p>I use Arch, btw. Built with vanilla HTML/CSS/JS — no frameworks, no bloat.</p>
+    <p>© <span id="year"></span> Aakash — Ranchi, Jharkhand, India</p>
+  </footer>
+
+  <script>
+    // Matrix rain animation
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = '01<>{}[]/\\$#アイウエオカキクケコ'.split('');
+    const drops = [];
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * canvas.height / fontSize;
+    }
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section-header, .card, .bento-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Terminal
+    const terminalForm = document.getElementById('terminal-form');
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+
+    document.getElementById('login-time').textContent = new Date().toLocaleString();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const commands = {
+      help: `Available commands:
+  help, whoami, about, skills, projects, neofetch, contact, sudo hire-me, clear`,
+
+      whoami: 'aakash — BCA student, Arch Linux devotee, future Linux Engineer',
+
+      about: `In 2023, I bought my first laptop. Six months later, Windows had eaten most of my system. I installed Arch. Never looked back.
+
+Over the next year, I tested 14 distros. Each taught me about control, transparency, and how systems should be built.
+
+Now I'm building Umbrella-Corporation_OS, running a self-hosted homelab, and working toward my first Linux Engineer role.
+
+I use Arch, btw.`,
+
+      skills: `languages    Java · C · C++ · Python · Bash/Zsh · QML
+linux        Arch (daily) · NixOS · Fedora · Gentoo · Kali · BlackArch
+tools        Vim · VSCodium · Kate · Claude Code · Git
+security     Nmap · Burp Suite · Metasploit (BlackArch: 49+ tools)
+devops       Docker (production) · Kubernetes (learning)`,
+
+      projects: `~/projects:
+  Umbrella-Corporation_OS    custom Arch distro · Red Queen theme
+  homelab                    self-hosted · replaced all subscriptions
+  local-ai-chatbot           Z.ai (GLM) · no cloud, no subscriptions
+  Java-Archives-by-AakasH    GitHub practice archive`,
+
+      neofetch: `                   -\`                   aakash@arch-portfolio
+                  .o+\`                  ---------------------
+                 \`ooo/                  OS: Arch Linux (btw)
+                \`+oooo:                 Kernel: 6.x
+               \`+oooooo:                Uptime: 24/7 (homelab)
+               -+oooooo+:               Shell: bash / zsh
+             \`/:-:++oooo+:              DE: KDE Plasma
+            \`/++++/+++++++:             Theme: Umbrella Corp
+           \`/++++++++++++++:            Project: Umbrella-Corporation_OS
+          \`/+++ooooooooooooo/\`          Distros tested: 14 (Arch won)
+         ./ooosssso++osssssso+\`         Goal: Linux Engineer
+        .oossssso-\`\`\`\`/ossssss+\`        Subscriptions: 0 (self-hosted)
+       -osssssso.      :ssssssso.       -------------------------
+      :osssssss/        osssso+++.      I use Arch, btw.
+     /ossssssss/        +ssssooo/-
+   \`/ossssso+/:-        -:/+osssso+-
+  \`+sso+:-\`                 \`.-/+oso:
+ \`++:.                           \`-/+/
+ .\`                                 \`/`,
+
+      contact: `github    → https://github.com/aakash
+linkedin  → https://linkedin.com/in/aakash
+mail      → aakash@example.com
+location  → Ranchi, Jharkhand, India
+
+> Fellow Linux engineers, distro hoppers — let's talk.`,
+
+      sudo: (args) => {
+        if (args[0] === 'hire-me') {
+          return '[sudo] permission granted ✓ — aakash@example.com — let's build something reliable. (I use Arch, btw.)';
+        }
+        return 'sudo: try `sudo hire-me`';
+      },
+
+      clear: () => {
+        const lines = terminalOutput.querySelectorAll('.terminal-line');
+        lines.forEach(line => {
+          if (!line.textContent.includes('Last login') &&
+              !line.textContent.includes('Type \'help\'') &&
+              !line.textContent.includes('Arch Linux')) {
+            line.remove();
+          }
+        });
+        return null;
+      }
+    };
+
+    terminalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = terminalInput.value.trim();
+      if (!input) return;
+
+      // Echo command
+      const cmdLine = document.createElement('div');
+      cmdLine.className = 'terminal-line';
+      cmdLine.innerHTML = `<span class="terminal-prompt">guest@aakash-arch:~$</span> ${input}`;
+      terminalOutput.insertBefore(cmdLine, terminalForm);
+
+      // Execute command
+      const parts = input.split(' ');
+      const cmd = parts[0].toLowerCase();
+      const args = parts.slice(1);
+
+      let output;
+      if (cmd === 'sudo' && commands.sudo) {
+        output = commands.sudo(args);
+      } else if (commands[cmd]) {
+        output = typeof commands[cmd] === 'function' ? commands[cmd](args) : commands[cmd];
+      } else {
+        output = `bash: ${cmd}: command not found   (try: help)`;
+      }
+
+      if (output !== null) {
+        const outputLine = document.createElement('div');
+        outputLine.className = 'terminal-line';
+        outputLine.style.whiteSpace = 'pre-wrap';
+        outputLine.textContent = output;
+        terminalOutput.insertBefore(outputLine, terminalForm);
+      }
+
+      terminalInput.value = '';
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    });
+
+    // Focus terminal on click
+    document.querySelector('.terminal-body').addEventListener('click', () => {
+      terminalInput.focus();
+    });
+  </script>
+</body>
+</html>
