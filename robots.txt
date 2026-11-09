@@ -1,0 +1,14 @@
+# robots.txt for Aakash's Portfolio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://aakash.dev/sitemap.xml
+
+# Disallow private/development paths
+Disallow: /scripts/
+Disallow: /components/
+Disallow: /.github/
+Disallow: /assets/js/
+Disallow: /assets/css/
+Disallow: /assets/fonts/
