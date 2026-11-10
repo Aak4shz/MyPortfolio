@@ -1,0 +1,12 @@
+# Secrets and local-only config
+.env*
+*.pem
+*.key
+credentials*
+creds*
+secrets*
+service-account*.json
+.claude/settings.local.json
+
+# OS files
+.DS_Store
